@@ -59,6 +59,29 @@ scope.assert = {
     }
   },
 
+  // Compare two arrays to see if they contain identical elements regardless
+  // of order.
+  unorderedEqual: function(expected, actual) {
+    this.arrayEqual(expected.sort(), actual.sort());
+  },
+
+  // Compare two arrays to ensure that they are NOT equal
+  arrayNotEqual: function(expected, actual) {
+    var areEqual = true;
+
+    if (expected.length !== actual.length) {
+      areEqual = false;
+    }
+
+    for (var i = 0; areEqual && i < expected.length; i++) {
+      if (expected[i] !== actual[i]) { areEqual = false; }
+    }
+
+    if (areEqual) {
+      assert.fail("Expected arrays to not be equal, but they were");
+    }
+  },
+
   arrayEqual: function(expected, actual) {
     var isFailure = false;
     if (expected == null || expected.length !== actual.length)
