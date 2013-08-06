@@ -63,6 +63,14 @@ scope.assert = {
       this.fail("Expected " + this._printObject(expected) + " but received " + this._printObject(actual));
   },
 
+  // Fail if the array does not contain the given object
+  contains: function(array, object) {
+    if (array.indexOf(object) === -1) {
+      this.fail("Array does not contain the specified object " +
+          this._printObject(object));
+    }
+  },
+
   // It would be nice to call this 'throws', but all Java keywords are Javascript keywords and hence 'throws'
   // is a JS keyword. Sigh.
   throwsException: function(expression, expectedExceptionName) {
