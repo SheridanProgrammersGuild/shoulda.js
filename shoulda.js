@@ -52,6 +52,13 @@ scope.assert = {
       this.fail("Expected " + this._printObject(expected) + " but received " + this._printObject(actual));
   },
 
+  match: function(string, pattern) {
+    if (!string.match(pattern)) {
+      this.fail("Expected " + this._printObject(string) + " to match "
+          + pattern);
+    }
+  },
+
   arrayEqual: function(expected, actual) {
     var isFailure = false;
     if (expected == null || expected.length !== actual.length)
