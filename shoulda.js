@@ -52,6 +52,13 @@ scope.assert = {
       this.fail("Expected " + this._printObject(expected) + " but received " + this._printObject(actual));
   },
 
+  notEqual: function(expected, actual) {
+    if (expected === actual) {
+      this.fail("Expected " + this._printObject(expected) + " but received "
+          + this._printObject(actual));
+    }
+  },
+
   match: function(string, pattern) {
     if (!string.match(pattern)) {
       this.fail("Expected " + this._printObject(string) + " to match "
