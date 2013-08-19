@@ -69,7 +69,9 @@ scope.assert = {
   // Compare two arrays to see if they contain identical elements regardless
   // of order.
   unorderedEqual: function(expected, actual) {
-    this.arrayEqual(expected.sort(), actual.sort());
+    var localExpected = expected.slice(0);
+    var localActual = actual.slice(0);
+    this.arrayEqual(localExpected.sort(), localActual.sort());
   },
 
   // Compare two arrays to ensure that they are NOT equal
