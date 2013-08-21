@@ -93,7 +93,7 @@ scope.assert = {
 
   arrayEqual: function(expected, actual) {
     var isFailure = false;
-    if (expected == null || expected.length !== actual.length)
+    if (expected === null || expected.length !== actual.length)
       isFailure = true;
     for (var i = 0; !isFailure && i < expected.length; i++)
       if (expected[i] !== actual[i])
@@ -106,6 +106,14 @@ scope.assert = {
   contains: function(array, object) {
     if (array.indexOf(object) === -1) {
       this.fail("Array does not contain the specified object " +
+          this._printObject(object));
+    }
+  },
+
+  // Fail if the array contains the given object
+  doesNotContain: function(array, object) {
+    if (array.indexOf(object) !== -1) {
+      this.fail("Array contains the specified object " +
           this._printObject(object));
     }
   },
