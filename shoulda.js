@@ -138,7 +138,7 @@ scope.assert = {
       assert.fail("Expected exception but none was thrown.");
   },
 
-  fail: function(message) { throw new AssertionError(message); },
+  fail: function(message) { throw new Error(message); },
 
   /* Used for printing the arguments passed to assertions. */
   _printObject: function(object) {
@@ -170,14 +170,6 @@ scope.ensureCalled = function(toExecute) {
   Tests.requiredCallbacks.push(wrappedFunction);
   return wrappedFunction;
 };
-
-scope.AssertionError = function(message) {
-  this.name = AssertionError;
-  this.message = message;
-};
-AssertionError.prototype = new Error();
-AssertionError.prototype.constructor = AssertionError;
-
 
 /*
  * A Context is a named set of test methods and nested contexts, with optional setup and tearDown blocks.
@@ -320,8 +312,7 @@ scope.Tests = {
       }
     } catch(exception) {
       failureMessage = exception.toString();
-      if (!(exception instanceof AssertionError) && exception.stack)
-        failureMessage += ("\n" + exception.stack);
+      failureMessage += ("\n" + exception.stack);
     }
 
     if (!failureMessage && Tests.requiredCallbacks.length > 0)
