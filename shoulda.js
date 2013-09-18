@@ -224,6 +224,10 @@ scope.TestMethod = function(name, methodBody) {
  * Tests is used to run tests and keep track of the success and failure counts.
  */
 scope.Tests = {
+  RED: '\u001b[31m',
+  GREEN: '\u001b[32m',
+  RESET: '\u001b[0m',
+
   testContexts: [],
   completedContexts: [],
   testsRun: 0,
@@ -334,16 +338,29 @@ scope.Tests = {
     return contextNames.concat(testName).join(": ");
   },
 
+  colorize: function(color, string) {
+    return color + string + this.RESET;
+  },
+
   printTestSummary: function() {
-    if (Tests.testsFailed > 0)
-      this.outputMethod("Fail (" + Tests.testsFailed + "/" + Tests.testsRun + ")");
-    else
-      this.outputMethod("Pass (" + Tests.testsRun + "/" + Tests.testsRun + ")");
+    var message, color;
+    if (Tests.testsFailed > 0) {
+      color = this.RED;
+      message = "Fail (" + Tests.testsFailed + "/" + Tests.testsRun + ")";
+    } else {
+      color = this.GREEN;
+      message = "Pass (" + Tests.testsRun + "/" + Tests.testsRun + ")";
+    }
+
+    this.outputMethod(this.colorize(color, message));
   },
 
   printFailure: function(testName, failureMessage) {
     // TODO(philc): We should consider other output formats, like HTML.
-    this.outputMethod("Fail \"" + testName + "\" - ", failureMessage);
+    var color = this.RED;
+    coloredMsg = this.colorize(color, "Fail \"" + testName + "\" - ");
+    coloredFailureMsg = this.colorize(color, failureMessage);
+    this.outputMethod(coloredMsg, coloredFailureMsg);
   }
 };
 
